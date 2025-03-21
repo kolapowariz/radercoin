@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Keep() {
   return (
     <section className="py-16 mx-auto">
-      <h2 className="w-[80%] text-center mx-auto text-3xl md:font-semibold">Keep up with Exness</h2>
+      <h2 className="w-[80%] text-center mx-auto text-3xl md:font-semibold">Keep up with RaderCoin</h2>
       <p className="w-[80%] text-center mx-auto text-gray-500 pt-4">Stay on top of our news, products and technology updates, events, partnerships, and more.</p>
       <section className="flex justify-center mt-8 ">
         <Link href="" className="flex items-center gap-1 text-gray-500">
@@ -37,7 +37,7 @@ export default function Keep() {
             <Image src='/keep3.png' width={300} height={300} alt="Nasdaq" className="mx-auto rounded-2xl w-[100%]" />
 
             <p className="bg-gray-200 w-fit mx-10 px-2 py-1 mt-6 rounded-3xl text-sm">Market news</p>
-            <p className="mx-10 my-8 text-xl">Week 2 Exness economic calender report 2025</p>
+            <p className="mx-10 my-8 text-xl">Week 2 RaderCoin economic calender report 2025</p>
           </Link>
         </section>
       </section>

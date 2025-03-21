@@ -2,7 +2,6 @@ import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 
-
 const instruments = [
   {
     image: "/XAUUSD.png",
@@ -161,50 +160,54 @@ export default function Thrieve() {
         <h2 className="text-3xl w-[80%] mx-auto pb-2">
           Trade assets from global markets
         </h2>
-        <p className="text-gray-400 w-[80%] mx-auto">
+        <p className="text-gray-400 w-[80%] mx-auto mb-10">
           Capitalize on every opportunity with the world&apos;s most popular
           assets.
         </p>
 
-        <div className="w-[90%] mx-auto overflow-x-auto">
-          <table className="w-full text-gray-400 text-sm">
+        <div className="overflow-x-auto">
+          <table className="min-w-[95%] mx-auto text-sm border-collapse border-gray-700">
             <thead>
-              <tr className="border-b border-gray-700 text-left">
-                <th className="">Instruments</th>
-                <th className="hidden">Leverage</th>
-                <th className="">Avg. Spread³ (pips)</th>
-                <th className="">Swap-free</th>
-                <th className=""></th>
+              <tr className="border-b border-gray-700 text-left text-gray-400 text-sm">
+                <th className="py-3 px-4">Instruments</th>
+                <th className="hidden md:table-cell py-3 px-4 ">Leverage</th>
+                <th className="py-3 px-4">Spread</th>
+                <th className="hidden md:table-cell py-3 px-4">Swap-free</th>
+                <th className="py-3 px-4 text-[#070e20]">..</th>
               </tr>
             </thead>
-            <tbody className="p-10">
-              {instruments.map((item, index) => (
-                <tr key={index} className="border-b border-gray-700">
-                  <td className="flex items-center gap-2 py-4">
+            <tbody>
+              {instruments.map((item) => (
+                <tr
+                  key={item.name}
+                  className="border-b border-gray-700 text-left"
+                >
+                  <td className="py-3 px-4 flex items-center gap-2">
                     <Image
                       src={item.image}
                       width={30}
                       height={30}
                       alt={item.alt}
-                      className=""
+                      className="hidden sm:block"
                     />
-                    <div className="text-left">
+                    <div>
                       <p>{item.name}</p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 hidden sm:block">
                         {item.description}
                       </p>
                     </div>
                   </td>
-                  <td className="py-4 text-left">{item.leverage}</td>
-                  <td className="py-4 text-left">{item.spread}</td>
-                  <td className="py-4 text-left">{item.swap}</td>
-                  <td className="py-4">
-                    <Link
-                      href=""
-                      className="flex items-center gap-1 text-gray-500"
-                    >
+                  <td className="py-3 px-4 hidden md:table-cell">
+                    {item.leverage}
+                  </td>
+                  <td className="py-3 px-4">{item.spread}</td>
+                  <td className="py-3 px-4 hidden md:table-cell">
+                    {item.swap}
+                  </td>
+                  <td className="py-3 px-4">
+                    <Link href="" className="flex items-center text-gray-500">
                       <span>{item.category}</span>
-                      <ChevronRightIcon className="size-5 pt-1" />
+                      <ChevronRightIcon className="size-4" />
                     </Link>
                   </td>
                 </tr>
@@ -212,165 +215,6 @@ export default function Thrieve() {
             </tbody>
           </table>
         </div>
-
-        <section className="flex gap-10 items-center pb-4 pt-10 text-gray-400 text-sm w-[90%] mx-auto sm:gap-28 lg:gap-36 xl:gap-64">
-          <p className="">Instruments</p>
-          <p className="hidden md:block">Leverage</p>
-          <p className=""> Avg. spread³, pips</p>
-          <p className="hidden md:block">Swap-free</p>
-        </section>
-
-        <hr className="w-[90%] mx-auto" />
-
-        <section className="pt-2 grid grid-cols-3 items-center justify-items-start w-[80%] md:w-[90%] mx-auto md:grid-cols-5 md:gap-14">
-          <section className="flex gap-2 items-center justify-center">
-            <Image
-              src="/XAUUSD.png"
-              width={30}
-              height={30}
-              alt="XAUUSD"
-              className="hidden sm:block"
-            />
-            <section>
-              <p className="text-left">XAUUSD</p>
-              <p className="text-xs text-gray-500 text-left hidden sm:block">
-                Gold vs US Dollar
-              </p>
-            </section>
-          </section>
-          <p className="hidden md:block">Customizable</p>
-          <p>11.2</p>
-          <p className="hidden md:block">Available</p>
-          <Link
-            href=""
-            className="flex justify-end px-[23px] items-center gap-1 text-gray-500"
-          >
-            <span>Metals</span>
-            <ChevronRightIcon className="size-5 pt-1" />
-          </Link>
-        </section>
-
-        <hr className="w-[90%] mx-auto mt-4 border-1 border-gray-700" />
-
-        <section className="pt-2 grid grid-cols-3 items-center justify-items-start w-[80%] mx-auto md:grid-cols-5 md:w-[90%] md:gap-14">
-          <section className="flex gap-2 items-center justify-center">
-            <Image
-              src="/USOIL.png"
-              width={30}
-              height={30}
-              alt="USOIL"
-              className="hidden sm:block"
-            />
-            <section>
-              <p className="text-left">USOIL</p>
-              <p className="text-xs text-gray-500 text-left hidden sm:block">
-                Crude Oil
-              </p>
-            </section>
-          </section>
-          <p className="hidden md:block">1:200</p>
-          <p className="">1.2</p>
-          <p className="hidden md:block">Available</p>
-          <Link
-            href=""
-            className="flex justify-end px-[13px] items-center gap-1 text-gray-500"
-          >
-            <span>Energies</span>
-            <ChevronRightIcon className="size-5 pt-1" />
-          </Link>
-        </section>
-
-        <hr className="w-[90%] mx-auto mt-4 border-1 border-gray-700" />
-
-        <section className="pt-2 grid grid-cols-3 items-center justify-items-start w-[80%] mx-auto md:grid-cols-5 md:w-[90%] md:gap-14">
-          <section className="flex gap-2 items-center justify-center">
-            <Image
-              src="/EURUSD.png"
-              width={30}
-              height={30}
-              alt="EURUSD"
-              className="hidden sm:block"
-            />
-            <section>
-              <p className="text-left">EURUSD</p>
-              <p className="text-xs text-gray-500 text-left hidden sm:block">
-                Euro vs USDollar
-              </p>
-            </section>
-          </section>
-          <p className="hidden md:block">Customizable</p>
-          <p className="">0.6</p>
-          <p className="hidden md:block">Available</p>
-          <Link
-            href=""
-            className="flex justify-center items-center gap-1 text-gray-500"
-          >
-            <span>Currencies</span>
-            <ChevronRightIcon className="size-5 pt-1" />
-          </Link>
-        </section>
-
-        <hr className="w-[90%] mx-auto mt-4 border-1 border-gray-700" />
-
-        <section className="pt-2 grid grid-cols-3 items-center justify-items-start w-[80%] mx-auto md:grid-cols-5 md:w-[90%] md:gap-14">
-          <section className="flex gap-2 items-center justify-center">
-            <Image
-              src="/US_30.png"
-              width={30}
-              height={30}
-              alt="US30"
-              className="hidden sm:block"
-            />
-            <section>
-              <p className="text-left">US30</p>
-              <p className="text-xs text-gray-500 text-left hidden sm:block">
-                US Wall Street 30 Index
-              </p>
-            </section>
-          </section>
-          <p className="hidden md:block">1:400</p>
-          <p className="">1.9</p>
-          <p className="hidden md:block">Available</p>
-          <Link
-            href=""
-            className="flex justify-end px-[23px] items-center gap-1 text-gray-500"
-          >
-            <span>Indices</span>
-            <ChevronRightIcon className="size-5 pt-1" />
-          </Link>
-        </section>
-
-        <hr className="w-[90%] mx-auto mt-4 border-1 border-gray-700" />
-
-        <section className="pt-2 grid grid-cols-3 items-center justify-items-start w-[80%] mx-auto md:grid-cols-5 md:w-[90%] md:gap-14">
-          <section className="flex gap-2 items-center justify-center">
-            <Image
-              src="/APPLE.png"
-              width={30}
-              height={30}
-              alt="AAPL"
-              className="hidden sm:block"
-            />
-            <section>
-              <p className="text-left">AAPL</p>
-              <p className="text-xs text-gray-500 text-left hidden sm:block">
-                Apple Inc.
-              </p>
-            </section>
-          </section>
-          <p className="hidden md:block">1:20</p>
-          <p className="">0.9</p>
-          <p className="hidden md:block">Swap applied</p>
-          <Link
-            href=""
-            className="flex justify-end px-[26px] items-center gap-1 text-gray-500"
-          >
-            <span>Stocks</span>
-            <ChevronRightIcon className="size-5 pt-1" />
-          </Link>
-        </section>
-
-        <hr className="w-[90%] mx-auto mt-4 border-1 border-gray-700" />
 
         <section className="flex justify-center items-center gap-3 mt-8 flex-col pb-16 sm:flex-row">
           <Link

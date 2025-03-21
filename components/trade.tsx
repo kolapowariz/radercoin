@@ -10,7 +10,7 @@ export default function Trade() {
         <section className="lg:w-[65%] pb-6">
 
           <h2 className="pt-10 text-3xl w-[70%] sm:w-[80%] mx-auto text-center lg:text-left lg:mx-5 lg:text-4xl lg:font-bold">Trade with a trusted broker today</h2>
-          <p className="pt-4 w-[80%] lg:mx-5 mx-auto text-gray-400 text-center lg:text-left">See for yourself why Exness is the broker of choice for over 800,000 traders and 64,000 partners.</p>
+          <p className="pt-4 w-[80%] lg:mx-5 mx-auto text-gray-400 text-center lg:text-left">See for yourself why RaderCoin is the broker of choice for over 800,000 traders and 64,000 partners.</p>
         </section>
 
         <section className="flex justify-center items-center gap-3 mt-8 flex-col text-black pb-10 sm:flex-row lg:text-lg">
