@@ -1,0 +1,202 @@
+"use client";
+import CandleChartWrapper from "@/components/candleStickWrapper";
+import Modal from "@/components/modal";
+import {
+  AdjustmentsHorizontalIcon,
+  ChartBarIcon,
+  Cog8ToothIcon,
+  GlobeEuropeAfricaIcon,
+  HeartIcon,
+  Square3Stack3DIcon,
+  UserCircleIcon,
+  WrenchScrewdriverIcon,
+} from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+import { MarketModal } from "./marketModal";
+import NewModal from "./newModal";
+import OrderModal from "./orderModal";
+import { PortfolioModal } from "./portfolioModal";
+import ConverterModal from "./converterModal";
+import NewsModal from "./newsModal";
+import { ManagerModal } from "./managerModal";
+import { AdminModal } from "./adminModal";
+
+const links = [
+  { name: "BOARD", href: "/dashboard", icon: ChartBarIcon },
+  { name: "ORDER BOOK", href: "/dashboard", icon: WrenchScrewdriverIcon },
+  { name: "MARKET", href: "/dashboard", icon: HeartIcon },
+  { name: "PORTFOLIO", href: "/dashboard", icon: Square3Stack3DIcon },
+  { name: "CALS", href: "/dashboard", icon: AdjustmentsHorizontalIcon },
+  { name: "NEWS", href: "/dashboard", icon: GlobeEuropeAfricaIcon },
+  { name: "MANAGER", href: "/dashboard", icon: UserCircleIcon },
+  { name: "ADMIN", href: "/dashboard", icon: Cog8ToothIcon },
+];
+
+export default function NavLinks() {
+  const [selectedCoin, setSelectedCoin] = useState<{
+    id: string;
+    name: string;
+    symbol: string;
+    thumb: string;
+  } | null>(null);
+  const [openModals, setOpenModals] = useState<string[]>([]);
+  const [isBoardActive, setIsBoardActive] = useState(true);
+  const [isXL, setIsXL] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsXL(window.innerWidth >= 1024);
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  const toggleModal = (name: string) => {
+    setOpenModals((prev) => {
+      // Toggle MARKET modal
+      if (
+        name === "MARKET" ||
+        name === "PORTFOLIO" ||
+        name === "MANAGER" ||
+        name === "ADMIN"
+      ) {
+        return prev.includes(name) ? [] : [name];
+      }
+
+      if (name === "BOARD") {
+        setIsBoardActive(true);
+        return prev.filter(
+          (modal) => modal === "ORDER BOOK" || modal === "NEWS"
+        );
+      }
+
+      if (name === "ORDER BOOK" || name === "NEWS" || name === "CALS") {
+        return prev.includes(name)
+          ? prev.filter((modal) => modal !== name)
+          : [...prev, name];
+      }
+
+      return prev.includes(name)
+        ? prev.filter((modal) => modal !== name)
+        : [...prev, name];
+    });
+
+    if (name === "MARKET") {
+      setIsBoardActive(false);
+    }
+  };
+
+  const filteredLinks = links.filter((link) => !(isXL && link.name === "PLUS"));
+
+  return (
+    <>
+      {filteredLinks.map((link) => {
+        const LinkIcon = link.icon;
+        return (
+          <button
+            key={link.name}
+            onClick={() => toggleModal(link.name)}
+            className={`flex flex-col h-[48px] grow items-center justify-center gap-2 rounded-md 
+            ${openModals.includes(link.name) ? "bg-blue-500" : "bg-gray-800"}
+            p-3 text-[0.6rem] font-medium hover:bg-gray-900 hover:text-white md:flex-none md:justify-start md:p-2 lg:p-0 md:px-3`}
+          >
+            <LinkIcon className="w-6" />
+            <p className="hidden lg:block">{link.name}</p>
+          </button>
+        );
+      })}
+
+      {isBoardActive && (
+        <div className="fixed z-20 top-[4.5rem] w-[94%] lg:w-[94%] xl:w-[95.8%] md:left-16 lg:left-20 shadow-lg transition-transform duration-300 h-[100%] bg-[#181e2c]">
+          <Modal setSelectedCoin={setSelectedCoin} />
+          <div className="">
+            <CandleChartWrapper
+              coinId={selectedCoin ? selectedCoin.id : null}
+            />
+          </div>
+        </div>
+      )}
+
+      {openModals.map((name, index) => {
+        if (name === "ORDER BOOK") {
+          return (
+            <OrderModal
+              key={name}
+              index={index}
+              onClose={() => toggleModal(name)}
+            />
+          );
+        }
+        if (name === "MARKET") {
+          return (
+            <MarketModal
+              key={name}
+              index={index}
+              onClose={() => toggleModal(name)}
+            />
+          );
+        }
+        if (name === "PORTFOLIO") {
+          return (
+            <PortfolioModal
+              key={name}
+              index={index}
+              onClose={() => toggleModal(name)}
+            />
+          );
+        }
+        if (name === "CALS") {
+          return (
+            <ConverterModal
+              key={name}
+              isOpen={true}
+              onClose={() => toggleModal(name)}
+              content={name}
+              index={index}
+            />
+          );
+        }
+        if (name === "NEWS") {
+          return (
+            <NewsModal
+              key={name}
+              isOpen={true}
+              onClose={() => toggleModal(name)}
+              content={name}
+              index={index}
+            />
+          );
+        }
+        if (name === "MANAGER") {
+          return (
+            <ManagerModal
+              key={name}
+              index={index}
+              onClose={() => toggleModal(name)}
+            />
+          );
+        }
+        if (name === "ADMIN") {
+          return (
+            <AdminModal
+              key={name}
+              index={index}
+              onClose={() => toggleModal(name)}
+            />
+          );
+        }
+        return (
+          <NewModal
+            key={name}
+            isOpen={true}
+            onClose={() => toggleModal(name)}
+            content={name}
+            index={index}
+          />
+        );
+      })}
+    </>
+  );
+}
