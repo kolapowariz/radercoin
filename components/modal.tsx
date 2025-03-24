@@ -1,25 +1,26 @@
-'use client';
+"use client";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import axios from "axios";
-import { useState } from 'react';
+import { useState } from "react";
+import { fetchSuggestions, fetchCoinDetails } from "@/lib/data";
+import useSWR from "swr";
+import { RealModalProps } from "@/types";
 
 
-interface ModalProps {
-  setSelectedCoin: (coin: { id: string; name: string; symbol: string; thumb: string }) => void;
-}
-
-export default function Modal({ setSelectedCoin }: ModalProps) {
+export default function Modal({ setSelectedCoin: onSelectCoin }: RealModalProps) {
   const [isOpen, setIsOpen] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [suggestions, setSuggestions] = useState<{ id: string; name: string; symbol: string; thumb: string }[]>([]);
-  const [coinDetails, setCoinDetails] = useState<{ name: string; symbol: string; market_data: { current_price: { usd: number }, high_24h: { usd: number }, price_change_percentage_24h: number, market_cap: { usd: number }, total_volume: { usd: number }, market_cap_change_24h_in_currency: { usd: number } } } | null>(null);
-
+  const [selectedCoin, setSelectedCoin] = useState<{
+    id: string;
+    name: string;
+    symbol: string;
+    thumb: string;
+  } | null>(null);
 
   const formatNumber = (num: number): string => {
     if (Math.abs(num) >= 1e12) {
-      return (num / 1e12).toFixed(2) + 'T';
-    } else if (Math.abs(num) >= 1e09) {
-      return (num / 1e09).toFixed(2) + 'B';
+      return (num / 1e12).toFixed(2) + "T";
+    } else if (Math.abs(num) >= 1e9) {
+      return (num / 1e9).toFixed(2) + "B";
     } else if (Math.abs(num) >= 1e6) {
       return (num / 1e6).toFixed(2) + "M";
     } else if (Math.abs(num) >= 1e3) {
@@ -27,58 +28,69 @@ export default function Modal({ setSelectedCoin }: ModalProps) {
     } else {
       return num.toString();
     }
-  }
+  };
 
   const formatDecimal = (num: number) => {
     return num.toFixed(2);
-  }
-
-
-
-  const fetchSuggestions = async (query: string) => {
-    if (!query) {
-      setSuggestions([]);
-      return;
-    }
-
-    try {
-      const response = await axios.get(
-        `https://api.coingecko.com/api/v3/search?query=${query}`
-      );
-      setSuggestions(response.data.coins);
-    } catch (error) {
-      console.error("Error fetching suggestions:", error);
-    }
   };
 
-  const fetchCoinDetails = async (id: string) => {
-    try {
-      const response = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/${id}`
-      );
-      setCoinDetails(response.data);
-      console.log('coin details:', response.data);
-    } catch (error) {
-      console.error("Error fetching coin details:", error);
+  const { data: suggestions, error: suggestionsError } = useSWR<
+    { id: string; name: string; symbol: string; thumb: string }[]
+  >(
+    searchTerm ? [`suggestions`, searchTerm] : null,
+    ([, query]: [string, string]) => fetchSuggestions(query),
+    {
+      revalidateOnFocus: false,
+      dedupingInterval: 3000,
     }
-  };
+  );
+
+  const { data: coinDetails, error: coinDetailsError } = useSWR<{
+    name: string;
+    symbol: string;
+    market_data: {
+      current_price: { usd: number };
+      high_24h: { usd: number };
+      price_change_percentage_24h: number;
+      market_cap: { usd: number };
+      total_volume: { usd: number };
+      market_cap_change_24h_in_currency: { usd: number };
+    };
+  }>(
+    selectedCoin ? [`coin-details`, selectedCoin.id] : null,
+    ([, id]: [string, string]) => fetchCoinDetails(id),
+    {
+      revalidateOnFocus: false,
+      dedupingInterval: 3000,
+    }
+  );
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const query = event.target.value;
-    setSearchTerm(query);
-    fetchSuggestions(query);
+    setSearchTerm(event.target.value);
   };
 
-  const handleSuggestionClick = (coin: { id: string; name: string; symbol: string; thumb: string }) => {
+  const handleSuggestionClick = (coin: {
+    id: string;
+    name: string;
+    symbol: string;
+    thumb: string;
+  }) => {
     setSelectedCoin(coin);
+    onSelectCoin(coin);
     setSearchTerm("");
-    setSuggestions([]);
-    fetchCoinDetails(coin.id);
   };
 
   const toggleModal = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
+
+  if (suggestionsError) {
+    return <p className="text-red-500">Failed to fetch suggestion data.</p>;
+  }
+
+  if (coinDetailsError) {
+    return <p className="text-red-500">Failed to fetch coin details data.</p>;
+  }
 
   return (
     <div className="text-white w-[17rem] lg:w-[17.5rem] xl:w-[18rem] mt-[-5rem] h-screen lg:h-[88%] lg:top-20 absolute top-0 flex items-center z-10">
@@ -98,7 +110,7 @@ export default function Modal({ setSelectedCoin }: ModalProps) {
               />
             </section>
 
-            {suggestions.length > 0 && (
+            {suggestions && suggestions.length > 0 && (
               <ul className="border border-gray-300 rounded-lg mt-2 bg-white shadow-md text-black absolute z-10">
                 {suggestions.map((coin) => (
                   <li
@@ -107,8 +119,9 @@ export default function Modal({ setSelectedCoin }: ModalProps) {
                     className="cursor-pointer px-4 hover:bg-gray-100"
                   >
                     <div className="flex items-center space-x-2">
-
-                      <span>{coin.name} ({coin.symbol.toUpperCase()})</span>
+                      <span>
+                        {coin.name} ({coin.symbol.toUpperCase()})
+                      </span>
                     </div>
                   </li>
                 ))}
@@ -125,15 +138,29 @@ export default function Modal({ setSelectedCoin }: ModalProps) {
                   </tr>
                 </thead>
                 <tbody className="text-sm text-white cursor-pointer bg-gray-800">
-                  {coinDetails && (
+                  {coinDetails && coinDetails.market_data ? (
                     <tr className="hover:bg-gray-700">
-                      <td className="px-2 py-2">{coinDetails.symbol.toUpperCase()}/USDT</td>
-                      <td className="px-6 py-2 text-right">{coinDetails.market_data.current_price.usd}</td>
+                      <td className="px-2 py-2">
+                        {coinDetails.symbol.toUpperCase()}/USDT
+                      </td>
+                      <td className="px-6 py-2 text-right">
+                        {coinDetails.market_data.current_price.usd}
+                      </td>
                       <td
-                        className={`px-2 py-2 text-right ${coinDetails.market_data.price_change_percentage_24h > 0 ? 'text-green-500' : 'text-red-500'
-                          }`}
+                        className={`px-2 py-2 text-right ${
+                          coinDetails.market_data.price_change_percentage_24h >
+                          0
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }`}
                       >
                         {coinDetails.market_data.price_change_percentage_24h}%
+                      </td>
+                    </tr>
+                  ) : (
+                    <tr>
+                      <td colSpan={3} className="text-center py-4">
+                        No data available
                       </td>
                     </tr>
                   )}
@@ -148,16 +175,35 @@ export default function Modal({ setSelectedCoin }: ModalProps) {
                 </p>
                 <section className="mt-4 w-[95%] mx-auto text-gray-300">
                   <p>{coinDetails.symbol.toUpperCase()} / Tether</p>
-                  <p className="text-xs border mt-2 px-2 py-1 w-16 rounded-2xl bg-orange-500">
-                    Binance
-                  </p>
                 </section>
                 <p className="text-4xl flex gap-4 items-center px-2 mt-4 text-gray-300 py-2">
                   <span>{coinDetails.market_data.current_price.usd}</span>
                   <span className="flex flex-col items-center gap-">
-                    <span className={`text-base ${coinDetails.market_data.price_change_percentage_24h > 0 ? 'text-green-500' : 'text-red-500'}`}>{formatDecimal(coinDetails.market_data.price_change_percentage_24h * 1000)}</span>
-                    <span className={`text-base ${coinDetails.market_data.price_change_percentage_24h > 0 ? 'text-green-500' : 'text-red-500'}`}>({formatDecimal(coinDetails.market_data.price_change_percentage_24h)}%)</span>
-
+                    <span
+                      className={`text-base ${
+                        coinDetails.market_data.price_change_percentage_24h > 0
+                          ? "text-green-500"
+                          : "text-red-500"
+                      }`}
+                    >
+                      {formatDecimal(
+                        coinDetails.market_data.price_change_percentage_24h *
+                          1000
+                      )}
+                    </span>
+                    <span
+                      className={`text-base ${
+                        coinDetails.market_data.price_change_percentage_24h > 0
+                          ? "text-green-500"
+                          : "text-red-500"
+                      }`}
+                    >
+                      (
+                      {formatDecimal(
+                        coinDetails.market_data.price_change_percentage_24h
+                      )}
+                      %)
+                    </span>
                   </span>
                 </p>
                 <section className="mt-10 flex justify-between items-center px-2 text-gray-300 text-xs ">
@@ -173,21 +219,35 @@ export default function Modal({ setSelectedCoin }: ModalProps) {
                 <section className="mt-2 flex justify-between items-center px-2 text-gray-300 text-xs">
                   <p>VOLUME 24H</p>
                   <hr className="w-24" />
-                  <p>{formatNumber(coinDetails.market_data.market_cap_change_24h_in_currency.usd)}</p>
+                  <p>
+                    {formatNumber(
+                      coinDetails.market_data.market_cap_change_24h_in_currency
+                        .usd
+                    )}
+                  </p>
                 </section>
                 <section className="mt-2 flex justify-between items-center px-2 text-gray-300 text-xs">
                   <p>DIRECT VOLUME</p>
                   <hr className="w-24" />
-                  <p>{formatNumber(coinDetails.market_data.total_volume.usd)}</p>
+                  <p>
+                    {formatNumber(coinDetails.market_data.total_volume.usd)}
+                  </p>
                 </section>
-                <button className="bg-green-500 block mt-4 mx-auto px-2 text-sm py-1 rounded-sm">Load orders book</button>
+                <button className="bg-green-500 block mt-4 mx-auto px-2 text-sm py-1 rounded-sm">
+                  Load orders book
+                </button>
               </section>
             )}
           </div>
         </div>
-
       )}
-      <button onClick={toggleModal} className=' h-6'>{isOpen ? <ChevronLeftIcon className='w-3 bg-gray-500 py-2 mr-[-0.3rem]' /> : <ChevronRightIcon className='w-3 bg-gray-500 ml-2 lg:ml-[-0.2rem] py-2' />}</button>
+      <button onClick={toggleModal} className=" h-6">
+        {isOpen ? (
+          <ChevronLeftIcon className="w-3 bg-gray-500 py-2 mr-[-0.3rem]" />
+        ) : (
+          <ChevronRightIcon className="w-3 bg-gray-500 ml-2 lg:ml-[-0.2rem] py-2" />
+        )}
+      </button>
     </div>
   );
 }
