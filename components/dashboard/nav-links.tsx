@@ -13,7 +13,6 @@ import {
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { MarketModal } from "./marketModal";
-import NewModal from "./newModal";
 import OrderModal from "./orderModal";
 import { PortfolioModal } from "./portfolioModal";
 import ConverterModal from "./converterModal";
@@ -54,38 +53,19 @@ export default function NavLinks() {
   }, []);
 
   const toggleModal = (name: string) => {
+    if (name === "BOARD") {
+      setIsBoardActive(true);
+      return;
+    }
+
     setOpenModals((prev) => {
-      // Toggle MARKET modal
-      if (
-        name === "MARKET" ||
-        name === "PORTFOLIO" ||
-        name === "MANAGER" ||
-        name === "ADMIN"
-      ) {
-        return prev.includes(name) ? [] : [name];
+      if (prev.includes(name)) {
+        return prev.filter((modal) => modal !== name);
       }
-
-      if (name === "BOARD") {
-        setIsBoardActive(true);
-        return prev.filter(
-          (modal) => modal === "ORDER BOOK" || modal === "NEWS"
-        );
-      }
-
-      if (name === "ORDER BOOK" || name === "NEWS" || name === "CALS") {
-        return prev.includes(name)
-          ? prev.filter((modal) => modal !== name)
-          : [...prev, name];
-      }
-
-      return prev.includes(name)
-        ? prev.filter((modal) => modal !== name)
-        : [...prev, name];
+      return [...prev, name];
     });
 
-    if (name === "MARKET") {
-      setIsBoardActive(false);
-    }
+    setIsBoardActive(false);
   };
 
   const filteredLinks = links.filter((link) => !(isXL && link.name === "PLUS"));
@@ -99,7 +79,12 @@ export default function NavLinks() {
             key={link.name}
             onClick={() => toggleModal(link.name)}
             className={`flex flex-col h-[48px] grow items-center justify-center gap-2 rounded-md 
-            ${openModals.includes(link.name) ? "bg-blue-500" : "bg-gray-800"}
+            ${
+              openModals.includes(link.name) ||
+              (isBoardActive && link.name === "BOARD")
+                ? "bg-blue-500"
+                : "bg-gray-800"
+            }
             p-3 text-[0.6rem] font-medium hover:bg-gray-900 hover:text-white md:flex-none md:justify-start md:p-2 lg:p-0 md:px-3`}
           >
             <LinkIcon className="w-6" />
@@ -111,7 +96,7 @@ export default function NavLinks() {
       {isBoardActive && (
         <div className="fixed z-20 top-[4.5rem] w-[94%] lg:w-[94%] xl:w-[95.8%] md:left-16 lg:left-20 shadow-lg transition-transform duration-300 h-[100%] bg-[#181e2c]">
           <Modal setSelectedCoin={setSelectedCoin} />
-          <div className="">
+          <div>
             <CandleChartWrapper
               coinId={selectedCoin ? selectedCoin.id : null}
             />
@@ -187,15 +172,7 @@ export default function NavLinks() {
             />
           );
         }
-        return (
-          <NewModal
-            key={name}
-            isOpen={true}
-            onClose={() => toggleModal(name)}
-            content={name}
-            index={index}
-          />
-        );
+        return null; // Prevent NewModal from rendering for "BOARD"
       })}
     </>
   );

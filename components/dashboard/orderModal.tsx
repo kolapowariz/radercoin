@@ -12,7 +12,7 @@ export default function OrderModal({ onClose }: ModalProps) {
         <XMarkIcon className="w-5 h-5" />
       </button>
       <div className="p-4 text-gray-300 text-base">
-        <p className="text-center">No order to show</p>
+        <p className="text-center">Order</p>
       </div>
     </div>
   );
