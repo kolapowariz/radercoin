@@ -40,6 +40,12 @@ export async function fetchSuggestions (query: string) {
     );
     return response.data.coins;
   } catch (error) {
+     if (axios.isAxiosError(error) && error.response?.status === 429) {
+       console.warn("Rate limit exceeded. Retrying in 5 seconds...");
+       await new Promise((resolve) => setTimeout(resolve, 5000));
+       return fetchSuggestions(query); // Retry after delay
+     }
+     throw error;
     console.error("Error fetching suggestions:", error);
     return null;
   }

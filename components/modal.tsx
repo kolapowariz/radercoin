@@ -4,6 +4,7 @@ import { useState } from "react";
 import { fetchSuggestions, fetchCoinDetails } from "@/lib/data";
 import useSWR from "swr";
 import { RealModalProps } from "@/types";
+import useDebounce from "@/lib/useDebounce";
 
 
 export default function Modal({ setSelectedCoin: onSelectCoin }: RealModalProps) {
@@ -15,6 +16,7 @@ export default function Modal({ setSelectedCoin: onSelectCoin }: RealModalProps)
     symbol: string;
     thumb: string;
   } | null>(null);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const formatNumber = (num: number): string => {
     if (Math.abs(num) >= 1e12) {
@@ -37,11 +39,11 @@ export default function Modal({ setSelectedCoin: onSelectCoin }: RealModalProps)
   const { data: suggestions, error: suggestionsError } = useSWR<
     { id: string; name: string; symbol: string; thumb: string }[]
   >(
-    searchTerm ? [`suggestions`, searchTerm] : null,
+    debouncedSearchTerm ? [`suggestions`, debouncedSearchTerm] : null,
     ([, query]: [string, string]) => fetchSuggestions(query),
     {
       revalidateOnFocus: false,
-      dedupingInterval: 3000,
+      dedupingInterval: 5000,
     }
   );
 
@@ -61,7 +63,7 @@ export default function Modal({ setSelectedCoin: onSelectCoin }: RealModalProps)
     ([, id]: [string, string]) => fetchCoinDetails(id),
     {
       revalidateOnFocus: false,
-      dedupingInterval: 3000,
+      dedupingInterval: 5000,
     }
   );
 
