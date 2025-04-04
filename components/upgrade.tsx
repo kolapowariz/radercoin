@@ -10,8 +10,8 @@ export default function Upgrade() {
         <p className="text-center mt-4 text-lg xl:text-xl">Trade with the world&apos;s largest retail broker and benefit from better-than-market conditions.</p>
       </section>
       <section className="flex justify-center items-center gap-3 mt-8 flex-col sm:flex-row">
-        <Link href='/login' className="bg-[#f8dc0f] font-bold rounded-md px-16 py-4">Register</Link>
-        <Link href='/login' className="bg-gray-100 font-bold rounded-md px-12 py-4">Try free demo</Link>
+        <Link href='/dashboard' className="bg-[#f8dc0f] font-bold rounded-md px-16 py-4">Register</Link>
+        <Link href='/dashboard' className="bg-gray-100 font-bold rounded-md px-12 py-4">Try free demo</Link>
       </section>
     </section>
   )
