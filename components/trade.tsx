@@ -14,8 +14,8 @@ export default function Trade() {
         </section>
 
         <section className="flex justify-center items-center gap-3 mt-8 flex-col text-black pb-10 sm:flex-row lg:text-lg">
-          <Link href='/login' className="bg-[#f8dc0f] rounded-md px-16 py-4 lg:px-10 lg:py-2">Register</Link>
-          <Link href='/login' className="bg-gray-800 text-white rounded-md px-12 py-4 lg:px-4 lg:py-2">Try free demo</Link>
+          <Link href='/dashboard' className="bg-[#f8dc0f] rounded-md px-16 py-4 lg:px-10 lg:py-2">Register</Link>
+          <Link href='/dashboard' className="bg-gray-800 text-white rounded-md px-12 py-4 lg:px-4 lg:py-2">Try free demo</Link>
         </section>
       </section>
     </section>

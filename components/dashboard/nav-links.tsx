@@ -7,14 +7,10 @@ import {
   Cog8ToothIcon,
   GlobeEuropeAfricaIcon,
   HeartIcon,
-  Square3Stack3DIcon,
   UserCircleIcon,
-  WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MarketModal } from "./marketModal";
-import OrderModal from "./orderModal";
-import { PortfolioModal } from "./portfolioModal";
 import ConverterModal from "./converterModal";
 import NewsModal from "./newsModal";
 import { ManagerModal } from "./managerModal";
@@ -22,9 +18,7 @@ import { AdminModal } from "./adminModal";
 
 const links = [
   { name: "BOARD", href: "/dashboard", icon: ChartBarIcon },
-  { name: "ORDER BOOK", href: "/dashboard", icon: WrenchScrewdriverIcon },
   { name: "MARKET", href: "/dashboard", icon: HeartIcon },
-  { name: "PORTFOLIO", href: "/dashboard", icon: Square3Stack3DIcon },
   { name: "CALS", href: "/dashboard", icon: AdjustmentsHorizontalIcon },
   { name: "NEWS", href: "/dashboard", icon: GlobeEuropeAfricaIcon },
   { name: "MANAGER", href: "/dashboard", icon: UserCircleIcon },
@@ -40,17 +34,6 @@ export default function NavLinks() {
   } | null>(null);
   const [openModals, setOpenModals] = useState<string[]>([]);
   const [isBoardActive, setIsBoardActive] = useState(true);
-  const [isXL, setIsXL] = useState(false);
-
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsXL(window.innerWidth >= 1024);
-    };
-
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
 
   const toggleModal = (name: string) => {
     if (name === "BOARD") {
@@ -68,11 +51,9 @@ export default function NavLinks() {
     setIsBoardActive(false);
   };
 
-  const filteredLinks = links.filter((link) => !(isXL && link.name === "PLUS"));
-
   return (
     <>
-      {filteredLinks.map((link) => {
+      {links.map((link) => {
         const LinkIcon = link.icon;
         return (
           <button
@@ -105,27 +86,9 @@ export default function NavLinks() {
       )}
 
       {openModals.map((name, index) => {
-        if (name === "ORDER BOOK") {
-          return (
-            <OrderModal
-              key={name}
-              index={index}
-              onClose={() => toggleModal(name)}
-            />
-          );
-        }
         if (name === "MARKET") {
           return (
             <MarketModal
-              key={name}
-              index={index}
-              onClose={() => toggleModal(name)}
-            />
-          );
-        }
-        if (name === "PORTFOLIO") {
-          return (
-            <PortfolioModal
               key={name}
               index={index}
               onClose={() => toggleModal(name)}
@@ -172,7 +135,7 @@ export default function NavLinks() {
             />
           );
         }
-        return null; // Prevent NewModal from rendering for "BOARD"
+        return null;
       })}
     </>
   );
