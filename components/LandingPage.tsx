@@ -120,13 +120,13 @@ export default function LandingPage() {
               </li>
               <li className="flex justify-center items-center gap-3 mt-8 lg:mt-0 lg:ml-[8rem] lg:text-base xl:text-lg xl:ml-[19rem]">
                 <Link
-                  href="/dashboard"
+                  href="/login"
                   className="bg-yellow-400 rounded-md px-10 py-2"
                 >
                   Register
                 </Link>
                 <Link
-                  href="/dashboard"
+                  href="/login"
                   className="bg-gray-300 rounded-md px-10 py-2 lg:px-8"
                 >
                   Sign in
@@ -196,13 +196,13 @@ export default function LandingPage() {
             <section className="flex justify-between items-center gap-3 pt-2 px-4">
               <section className="flex justify-center items-center gap-3 mt-8 lg:mt-0 lg:text-base xl:text-lg">
                 <Link
-                  href="/dashboard"
+                  href="/login"
                   className="bg-yellow-400 rounded-md px-10 py-2"
                 >
                   Register
                 </Link>
                 <Link
-                  href="/dashboard"
+                  href="/login"
                   className="bg-gray-300 rounded-md px-10 py-2 lg:px-8"
                 >
                   Sign in

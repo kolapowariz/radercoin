@@ -218,12 +218,12 @@ export default function Thrieve() {
 
         <section className="flex justify-center items-center gap-3 mt-8 flex-col pb-16 sm:flex-row">
           <Link
-            href="/dashboard"
+            href="/login"
             className="bg-[#f8dc0f] rounded-md px-16 py-4 text-black"
           >
             Register
           </Link>
-          <Link href="/dashboard" className="bg-gray-900 rounded-md px-12 py-4">
+          <Link href="/login" className="bg-gray-900 rounded-md px-12 py-4">
             Try free demo
           </Link>
         </section>
