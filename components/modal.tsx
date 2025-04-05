@@ -235,9 +235,6 @@ export default function Modal({ setSelectedCoin: onSelectCoin }: RealModalProps)
                     {formatNumber(coinDetails.market_data.total_volume.usd)}
                   </p>
                 </section>
-                <button className="bg-green-500 block mt-4 mx-auto px-2 text-sm py-1 rounded-sm">
-                  Load orders book
-                </button>
               </section>
             )}
           </div>
