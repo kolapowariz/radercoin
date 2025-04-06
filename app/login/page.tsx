@@ -1,5 +1,5 @@
 import GitHubAuth from "@/components/githubauth";
-// import GoogleAuth from "@/components/googleauth";
+import GoogleAuth from "@/components/googleauth";
 
 export default function SignIn() {
   return (
@@ -9,7 +9,7 @@ export default function SignIn() {
       </h2>
       <div className="space-y-4 w-full max-w-xs">
         <GitHubAuth />
-        {/* <GoogleAuth /> */}
+        <GoogleAuth />
       </div>
     </div>
   );

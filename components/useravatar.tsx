@@ -17,7 +17,7 @@ export default async function UserAvatar() {
         alt="User Avatar"
         width={50}
         height={50}
-        className="rounded-full px-1 bg-green-400"
+        className="rounded-full"
       />
     </div>
   );
