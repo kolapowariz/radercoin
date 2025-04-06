@@ -1,8 +1,13 @@
+import { auth } from "@/auth";
 import DashboardFooter from "@/components/dashboardfotter";
 import UserAvatar from "@/components/useravatar";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
-export default function Page() {
+export default async function Page() {
+  const authenticated = await auth();
+
+  if (!authenticated) redirect('/login')
   return (
     <div className="bg-gray-900 text-white">
       <section className="h-screen md:hidden flex flex-col justify-center items-center overflow-hidden">
@@ -14,17 +19,7 @@ export default function Page() {
         <header className="flex justify-between items-center">
           <section className="w-[20rem] h-16 ml-0 lg:ml-48 flex gap-10"></section>
           <section className="flex justify-between items-center gap-2 lg:gap-4 cursor-pointer">
-            {/* <section className="text-green-500 text-right">
-              <p className="text-xs">REAL ACCOUNT</p>
-              <p className="text-lg font-semibold">0.00$</p>
-              <p className="text-[0.54rem] text-green-900">ESTIMATE BALANCE</p>
-            </section> */}
             <UserAvatar />
-            {/* <section>
-              <p className="bg-orange-500 rounded-full w-8 text-center h-8 text-xl font-bold">
-                P
-              </p>
-            </section> */}
           </section>
         </header>
 
