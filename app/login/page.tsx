@@ -1,5 +1,6 @@
 import GitHubAuth from "@/components/githubauth";
 import GoogleAuth from "@/components/googleauth";
+// import { ResendAuth } from "@/components/resendauth";
 
 export default function SignIn() {
   return (
@@ -10,6 +11,7 @@ export default function SignIn() {
       <div className="space-y-4 w-full max-w-xs">
         <GitHubAuth />
         <GoogleAuth />
+        {/* <ResendAuth /> */}
       </div>
     </div>
   );

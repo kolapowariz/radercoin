@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/mongodb-adapter": "^3.8.0",
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-slot": "^1.1.2",
     "apexcharts": "^4.5.0",
@@ -16,6 +17,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.483.0",
+    "mongodb": "^6.15.0",
     "next": "^15.2.4",
     "next-auth": "^5.0.0-beta.25",
     "react": "^19.0.0",
