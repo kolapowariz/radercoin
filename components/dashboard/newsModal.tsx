@@ -1,5 +1,4 @@
-
-import { ModalProps } from "@/types";
+import { ModalProps } from "@/lib/types";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
 export default function NewsModal({ onClose }: ModalProps) {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ModalProps } from "@/types";
+import { ModalProps } from "@/lib/types";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import useSWR from "swr";
 
@@ -12,11 +12,15 @@ export function MarketModal({ onClose }: ModalProps) {
     fetcher
   );
 
-  console.log(data)
+  console.log(data);
 
   return (
     <div className="fixed z-20 top-[4.5rem] w-[94%] lg:w-[95.6%] left-16 lg:left-20 shadow-lg transition-transform duration-300 h-screen lg:h-[87.7%] bg-[#181e2c] p-4 overflow-scroll">
-      <button title="Close" onClick={onClose} className="text-gray-400 hover:text-white hidden">
+      <button
+        title="Close"
+        onClick={onClose}
+        className="text-gray-400 hover:text-white hidden"
+      >
         <XMarkIcon className="w-5 h-5" />
       </button>
 
@@ -46,32 +50,51 @@ export function MarketModal({ onClose }: ModalProps) {
             </thead>
             <tbody className="bg-gray-800">
               {data ? (
-                data.map((coin: { id: string; current_price: number; total_volume: number; market_cap: number; price_change_percentage_24h: number; high_24h: number; low_24h: number; }) => (
-                  <tr
-                    key={coin.id}
-                    className="hover:bg-gray-700 transition-colors text-left"
-                  >
-                    <td className="p-2 flex items-center gap-2">
-                      {coin.id.toUpperCase()}
-                    </td>
-                    <td className="p-2">${coin.current_price.toLocaleString()}</td>
-                    <td className="p-2">${coin.total_volume.toLocaleString()}</td>
-                    <td className="p-2">${coin.total_volume.toLocaleString()}</td>
-                    <td className="p-2">${coin.market_cap.toLocaleString()}</td>
-                    <td
-                      className={`p-2 ${
-                        coin.price_change_percentage_24h >= 0
-                          ? "text-green-400"
-                          : "text-red-400"
-                      }`}
+                data.map(
+                  (coin: {
+                    id: string;
+                    current_price: number;
+                    total_volume: number;
+                    market_cap: number;
+                    price_change_percentage_24h: number;
+                    high_24h: number;
+                    low_24h: number;
+                  }) => (
+                    <tr
+                      key={coin.id}
+                      className="hover:bg-gray-700 transition-colors text-left"
                     >
-                      {coin.price_change_percentage_24h.toFixed(2)}%
-                    </td>
-                    <td className="p-2">
-                      ${coin.high_24h.toLocaleString()} / ${coin.low_24h.toLocaleString()}
-                    </td>
-                  </tr>
-                ))
+                      <td className="p-2 flex items-center gap-2">
+                        {coin.id.toUpperCase()}
+                      </td>
+                      <td className="p-2">
+                        ${coin.current_price.toLocaleString()}
+                      </td>
+                      <td className="p-2">
+                        ${coin.total_volume.toLocaleString()}
+                      </td>
+                      <td className="p-2">
+                        ${coin.total_volume.toLocaleString()}
+                      </td>
+                      <td className="p-2">
+                        ${coin.market_cap.toLocaleString()}
+                      </td>
+                      <td
+                        className={`p-2 ${
+                          coin.price_change_percentage_24h >= 0
+                            ? "text-green-400"
+                            : "text-red-400"
+                        }`}
+                      >
+                        {coin.price_change_percentage_24h.toFixed(2)}%
+                      </td>
+                      <td className="p-2">
+                        ${coin.high_24h.toLocaleString()} / $
+                        {coin.low_24h.toLocaleString()}
+                      </td>
+                    </tr>
+                  )
+                )
               ) : (
                 <tr>
                   <td colSpan={7} className="text-center p-4">

@@ -3,11 +3,12 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { fetchSuggestions, fetchCoinDetails } from "@/lib/data";
 import useSWR from "swr";
-import { RealModalProps } from "@/types";
+import { RealModalProps } from "@/lib/types";
 import useDebounce from "@/lib/useDebounce";
 
-
-export default function Modal({ setSelectedCoin: onSelectCoin }: RealModalProps) {
+export default function Modal({
+  setSelectedCoin: onSelectCoin,
+}: RealModalProps) {
   const [isOpen, setIsOpen] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCoin, setSelectedCoin] = useState<{

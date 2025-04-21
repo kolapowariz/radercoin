@@ -1,7 +1,7 @@
 "use client";
 
 import { fetchCoinData } from "@/lib/data";
-import { ChartProps, FormattedData } from "@/types";
+import { ChartProps, FormattedData } from "@/lib/types";
 import useSWR from "swr";
 import Chart from "react-apexcharts";
 
