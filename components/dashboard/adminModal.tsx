@@ -1,40 +1,180 @@
-import { ModalProps } from "@/types";
+import { ModalProps } from "@/lib/types";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
-
 export function AdminModal({ onClose }: ModalProps) {
-
-
   const users = [
-    { name: "Evangelos Delivasilis", email: "edelivasilis@gmail.com", sign: 'Standard', login: "25/02/2025 23:18", notification: '-', currency: "EUR" },
-    { name: "Hans Bjarni Sigurbjörnsson", email: "Hansbjarni11@gmail.com", sign: 'Standard', login: "19/02/2025 17:26", notification: '-', currency: "USD" },
-    { name: "Björn Ehrhardt", email: "ath_ehrhardt@yahoo.de", sign: 'Standard', login: "14/02/2025 02:47", notification: '-', currency: "EUR" },
-    { name: "Ivan Blazanovic", email: "ivan.blazanovic2804@gmail.com", sign: 'Standard', login: "11/02/2025 06:11", notification: '-', currency: "EUR" },
-    { name: "Aditi Puri", email: "aditi.puri2207@gmail.com", sign: 'Standard', login: "10/02/2025 08:02", notification: '-', currency: "AUD" },
-    { name: "Evangelos Delivasilis", email: "edelivasilis@gmail.com", sign: 'Standard', login: "25/02/2025 23:18", notification: '-', currency: "EUR" },
-    { name: "Hans Bjarni Sigurbjörnsson", email: "Hansbjarni11@gmail.com", sign: 'Standard', login: "19/02/2025 17:26", notification: '-', currency: "USD" },
-    { name: "Björn Ehrhardt", email: "ath_ehrhardt@yahoo.de", sign: 'Standard', login: "14/02/2025 02:47", notification: '-', currency: "EUR" },
-    { name: "Ivan Blazanovic", email: "ivan.blazanovic2804@gmail.com", sign: 'Standard', login: "11/02/2025 06:11", notification: '-', currency: "EUR" },
-    { name: "Aditi Puri", email: "aditi.puri2207@gmail.com", sign: 'Standard', login: "10/02/2025 08:02", notification: '-', currency: "AUD" },
-    { name: "Evangelos Delivasilis", email: "edelivasilis@gmail.com", sign: 'Standard', login: "25/02/2025 23:18", notification: '-', currency: "EUR" },
-    { name: "Hans Bjarni Sigurbjörnsson", email: "Hansbjarni11@gmail.com", sign: 'Standard', login: "19/02/2025 17:26", notification: '-', currency: "USD" },
-    { name: "Björn Ehrhardt", email: "ath_ehrhardt@yahoo.de", sign: 'Standard', login: "14/02/2025 02:47", notification: '-', currency: "EUR" },
-    { name: "Ivan Blazanovic", email: "ivan.blazanovic2804@gmail.com", sign: 'Standard', login: "11/02/2025 06:11", notification: '-', currency: "EUR" },
-    { name: "Aditi Puri", email: "aditi.puri2207@gmail.com", sign: 'Standard', login: "10/02/2025 08:02", notification: '-', currency: "AUD" },
-    { name: "Evangelos Delivasilis", email: "edelivasilis@gmail.com", sign: 'Standard', login: "25/02/2025 23:18", notification: '-', currency: "EUR" },
-    { name: "Hans Bjarni Sigurbjörnsson", email: "Hansbjarni11@gmail.com", sign: 'Standard', login: "19/02/2025 17:26", notification: '-', currency: "USD" },
-    { name: "Björn Ehrhardt", email: "ath_ehrhardt@yahoo.de", sign: 'Standard', login: "14/02/2025 02:47", notification: '-', currency: "EUR" },
-    { name: "Ivan Blazanovic", email: "ivan.blazanovic2804@gmail.com", sign: 'Standard', login: "11/02/2025 06:11", notification: '-', currency: "EUR" },
-    { name: "Aditi Puri", email: "aditi.puri2207@gmail.com", sign: 'Standard', login: "10/02/2025 08:02", notification: '-', currency: "AUD" },
+    {
+      name: "Evangelos Delivasilis",
+      email: "edelivasilis@gmail.com",
+      sign: "Standard",
+      login: "25/02/2025 23:18",
+      notification: "-",
+      currency: "EUR",
+    },
+    {
+      name: "Hans Bjarni Sigurbjörnsson",
+      email: "Hansbjarni11@gmail.com",
+      sign: "Standard",
+      login: "19/02/2025 17:26",
+      notification: "-",
+      currency: "USD",
+    },
+    {
+      name: "Björn Ehrhardt",
+      email: "ath_ehrhardt@yahoo.de",
+      sign: "Standard",
+      login: "14/02/2025 02:47",
+      notification: "-",
+      currency: "EUR",
+    },
+    {
+      name: "Ivan Blazanovic",
+      email: "ivan.blazanovic2804@gmail.com",
+      sign: "Standard",
+      login: "11/02/2025 06:11",
+      notification: "-",
+      currency: "EUR",
+    },
+    {
+      name: "Aditi Puri",
+      email: "aditi.puri2207@gmail.com",
+      sign: "Standard",
+      login: "10/02/2025 08:02",
+      notification: "-",
+      currency: "AUD",
+    },
+    {
+      name: "Evangelos Delivasilis",
+      email: "edelivasilis@gmail.com",
+      sign: "Standard",
+      login: "25/02/2025 23:18",
+      notification: "-",
+      currency: "EUR",
+    },
+    {
+      name: "Hans Bjarni Sigurbjörnsson",
+      email: "Hansbjarni11@gmail.com",
+      sign: "Standard",
+      login: "19/02/2025 17:26",
+      notification: "-",
+      currency: "USD",
+    },
+    {
+      name: "Björn Ehrhardt",
+      email: "ath_ehrhardt@yahoo.de",
+      sign: "Standard",
+      login: "14/02/2025 02:47",
+      notification: "-",
+      currency: "EUR",
+    },
+    {
+      name: "Ivan Blazanovic",
+      email: "ivan.blazanovic2804@gmail.com",
+      sign: "Standard",
+      login: "11/02/2025 06:11",
+      notification: "-",
+      currency: "EUR",
+    },
+    {
+      name: "Aditi Puri",
+      email: "aditi.puri2207@gmail.com",
+      sign: "Standard",
+      login: "10/02/2025 08:02",
+      notification: "-",
+      currency: "AUD",
+    },
+    {
+      name: "Evangelos Delivasilis",
+      email: "edelivasilis@gmail.com",
+      sign: "Standard",
+      login: "25/02/2025 23:18",
+      notification: "-",
+      currency: "EUR",
+    },
+    {
+      name: "Hans Bjarni Sigurbjörnsson",
+      email: "Hansbjarni11@gmail.com",
+      sign: "Standard",
+      login: "19/02/2025 17:26",
+      notification: "-",
+      currency: "USD",
+    },
+    {
+      name: "Björn Ehrhardt",
+      email: "ath_ehrhardt@yahoo.de",
+      sign: "Standard",
+      login: "14/02/2025 02:47",
+      notification: "-",
+      currency: "EUR",
+    },
+    {
+      name: "Ivan Blazanovic",
+      email: "ivan.blazanovic2804@gmail.com",
+      sign: "Standard",
+      login: "11/02/2025 06:11",
+      notification: "-",
+      currency: "EUR",
+    },
+    {
+      name: "Aditi Puri",
+      email: "aditi.puri2207@gmail.com",
+      sign: "Standard",
+      login: "10/02/2025 08:02",
+      notification: "-",
+      currency: "AUD",
+    },
+    {
+      name: "Evangelos Delivasilis",
+      email: "edelivasilis@gmail.com",
+      sign: "Standard",
+      login: "25/02/2025 23:18",
+      notification: "-",
+      currency: "EUR",
+    },
+    {
+      name: "Hans Bjarni Sigurbjörnsson",
+      email: "Hansbjarni11@gmail.com",
+      sign: "Standard",
+      login: "19/02/2025 17:26",
+      notification: "-",
+      currency: "USD",
+    },
+    {
+      name: "Björn Ehrhardt",
+      email: "ath_ehrhardt@yahoo.de",
+      sign: "Standard",
+      login: "14/02/2025 02:47",
+      notification: "-",
+      currency: "EUR",
+    },
+    {
+      name: "Ivan Blazanovic",
+      email: "ivan.blazanovic2804@gmail.com",
+      sign: "Standard",
+      login: "11/02/2025 06:11",
+      notification: "-",
+      currency: "EUR",
+    },
+    {
+      name: "Aditi Puri",
+      email: "aditi.puri2207@gmail.com",
+      sign: "Standard",
+      login: "10/02/2025 08:02",
+      notification: "-",
+      currency: "AUD",
+    },
   ];
   return (
     <div className="fixed z-20 top-[4.5rem] w-[94%] lg:w-[96%] left-16 lg:left-20 shadow-lg transition-transform duration-300 h-screen lg:h-[87.7%] bg-[#181e2c] overflow-scroll">
-      <button title="Close" onClick={onClose} className="text-gray-400 hover:text-white hidden">
+      <button
+        title="Close"
+        onClick={onClose}
+        className="text-gray-400 hover:text-white hidden"
+      >
         <XMarkIcon className="w-5 h-5" />
       </button>
 
       <section>
-
         <section className="flex gap-5 bg-white text-black py-1 px-2">
           <p className="">DASHBOARD</p>
           <p>GENERAL SETTING</p>
@@ -52,8 +192,6 @@ export function AdminModal({ onClose }: ModalProps) {
           <p>IDENTITY</p>
           <p>TEMPLATES</p>
         </section>
-
-
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
           <section className="bg-white p-4">
@@ -94,7 +232,10 @@ export function AdminModal({ onClose }: ModalProps) {
               </thead>
               <tbody>
                 {users.map((user, index) => (
-                  <tr key={index} className="border-b border-gray-700 hover:bg-gray-700 text-black">
+                  <tr
+                    key={index}
+                    className="border-b border-gray-700 hover:bg-gray-700 text-black"
+                  >
                     <td className="p-2">{user.name}</td>
                     <td className="p-2">{user.email}</td>
                     <td className="p-2">{user.sign}</td>
@@ -102,9 +243,7 @@ export function AdminModal({ onClose }: ModalProps) {
                     <td className="p-2">{user.notification}</td>
                     <td className="p-2">{user.currency}</td>
                     <td className="p-2 text-center">
-                      <button className="text-gray-300">
-                        Edit
-                      </button>
+                      <button className="text-gray-300">Edit</button>
                     </td>
                   </tr>
                 ))}
@@ -114,7 +253,5 @@ export function AdminModal({ onClose }: ModalProps) {
         </div>
       </section>
     </div>
-  )
+  );
 }
-
-
