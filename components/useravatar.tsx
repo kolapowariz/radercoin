@@ -9,8 +9,8 @@ export default async function UserAvatar() {
   return (
     <div className="text-center flex gap-4">
       <section>
-        <p>{session.user.name}</p>
-        <p>{session.user.email}</p>
+        <p className="text-right">{session.user.name}</p>
+        <p className="text-right">{session.user.email}</p>
       </section>
       <Image
         src={session.user.image || "/youtube.svg"}
